@@ -1,11 +1,27 @@
+import { Route, Routes } from "react-router-dom";
+import Layout from "./layout/Layout.jsx";
+
+/* pages */
+import CreatePet from "./pages/CreatePet";
+import EditPet from "./pages/EditPet";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import PetDetail from "./pages/PetDetail";
+import Register from "./pages/Register";
+
+/* app component */
 function App() {
   return (
-    <div className="p-4">
-      <h1 className="text-4xl font-bold text-blue-500">
-        {" "}
-        Tailwind is working!
-      </h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="pet/:id" element={<PetDetail />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="create" element={<CreatePet />} />
+        <Route path="edit/:id" element={<EditPet />} />
+      </Route>{" "}
+    </Routes>
   );
 }
 
