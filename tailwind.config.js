@@ -7,26 +7,40 @@ export default {
         sans: ["Outfit", "sans-serif"],
       },
       colors: {
-        primary: "#2B7A2B",
-        "primary-dark": "#226022",
-        secondary: "#DDEAD9",
-        accent: "#F5F5F5",
-        error: "#D33C32",
-        success: "#4CAF50",
-        text: "#333333",
-        label: "#222222",
-        disabled: "#E4E4E4",
+        // Design system tokens
+        primary: "#2E7D32", // Full opacity (100%)
+        "primary-light": "rgba(46,125,50,0.15)", // 15% opacity (body bg)
+        "primary-medium": "rgba(46,125,50,0.60)", // 60% opacity (dropdown bg/mobile)
+        secondary: "#03A9F4",
+        "neutral-light": "#F5F5F5",
+        "neutral-dark": "#212121",
+        error: "#D32F2F",
+        placeholder: "#999999",
+        "border-default": "#CCCCCC",
+        "border-hover": "#AAAAAA",
         white: "#FFFFFF",
         black: "#000000",
       },
       borderRadius: {
-        lg: "12px",
-        xl: "15px",
+        // Fra design systemet:
+        card: "12px",
+        badges: "12px",
+        input: "15px",
+        btn: "9999px",
       },
       boxShadow: {
-        card: "0 4px 10px rgba(0,0,0,0.06)",
-        button: "0 2px 4px rgba(0,0,0,0.1)",
+        card: "0 4px 12px 0 rgba(0,0,8,0.25)", // Fra Figma-design: Y=4, blur=12, #000008, 25%
       },
+      // SPACING:
+      // XS: 4px (p-1)
+      // S: 8px (p-2)
+      // M: 16px (p-4)
+      // L: 24px (p-6)
+      // XL: 32px (p-8)
+      // Spacing tokens i designsystemet (XS–XL, 4–32px) matcher nesten 1:1 med Tailwinds standardskala.
+      // Derfor brukes Tailwinds innebygde spacing-klasser for all margin/padding.
+      // Ved behov for avvik eller ekstra spacing, legges det inn per komponent i henhold til visuell balanse og responsivitet.
+      // Eventuelle edge cases håndteres direkte i koden, ikke som custom tokens.
     },
   },
   plugins: [],
