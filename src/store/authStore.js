@@ -3,24 +3,28 @@ import { create } from "zustand";
 export const useAuthStore = create((set) => ({
   user: null,
   token: null,
+  apiKey: null,
 
-  login: (userData, token) => {
-    set({ user: userData, token });
+  login: (userData, token, apiKey) => {
+    set({ user: userData, token, apiKey });
     sessionStorage.setItem("user", JSON.stringify(userData));
     sessionStorage.setItem("token", token);
+    sessionStorage.setItem("apiKey", apiKey);
   },
 
   logout: () => {
-    set({ user: null, token: null });
+    set({ user: null, token: null, apiKey: null });
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("apiKey");
   },
 
   initAuth: () => {
     const user = sessionStorage.getItem("user");
     const token = sessionStorage.getItem("token");
-    if (user && token) {
-      set({ user: JSON.parse(user), token });
+    const apiKey = sessionStorage.getItem("apiKey");
+    if (user && token && apiKey) {
+      set({ user: JSON.parse(user), token, apiKey });
     }
   },
 }));

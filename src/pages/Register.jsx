@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { register as registerUser } from "../api/auth";
+import { login, register as registerUser } from "../api/auth";
+import { createApiKey } from "../auth/create-api-key";
 import Button from "../components/Button";
 import InputFloating from "../components/InputFloating";
 import { useAuthStore } from "../store/authStore";
@@ -15,18 +16,76 @@ export default function Register() {
     watch,
   } = useForm();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const onSubmit = async (data) => {
-    setLoading(true);
+    setSuccess(false);
+    setErrorMsg("");
+    // Payload som Noroff-API forventer
+    const payload = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+
     try {
-      const result = await registerUser(data);
-      useAuthStore.getState().login(result.data, result.token);
-      window.location.href = "/"; // Dashboard om tid
+      const registerRes = await registerUser(payload);
+      // Her: SJEKK PÅ DATA-NODE
+      if (
+        registerRes &&
+        registerRes.data &&
+        registerRes.data.name &&
+        registerRes.data.email
+      ) {
+        setSuccess(true);
+        // Logg inn direkte
+        try {
+          const loginRes = await login({
+            email: data.email,
+            password: data.password,
+          });
+          const result = loginRes.data?.data || loginRes.data;
+          const userData = {
+            name: result.name,
+            email: result.email,
+          };
+          const token = result.accessToken;
+
+          // API key
+          let apiKey = sessionStorage.getItem("apiKey");
+          if (!apiKey && result.apiKey) {
+            apiKey = result.apiKey;
+            sessionStorage.setItem("apiKey", apiKey);
+          }
+          if (!apiKey) {
+            apiKey = await createApiKey(token);
+            sessionStorage.setItem("apiKey", apiKey);
+          }
+
+          useAuthStore.getState().login(userData, token, apiKey);
+
+          // Suksess – umiddelbar redirect
+          navigate("/");
+        } catch (loginError) {
+          setErrorMsg("Bruker opprettet, men innlogging feilet. Prøv manuelt.");
+        }
+        return;
+      }
+      // Hvis ikke .data.name/.data.email: API feilet
+      throw new Error(
+        "Kunne ikke lage bruker – prøv med annet brukernavn/epost."
+      );
     } catch (error) {
-      setError("email", { type: "manual", message: "Registration failed" });
-    } finally {
-      setLoading(false);
+      // Prøv å parse feilmelding fra Noroff API
+      const apiError =
+        error?.response?.data?.errors?.[0]?.message ||
+        error?.response?.data?.message ||
+        error.message ||
+        "Registration failed";
+      setError("email", { type: "manual", message: apiError });
+      setErrorMsg(apiError);
+      setSuccess(false);
     }
   };
 
@@ -39,8 +98,19 @@ export default function Register() {
         <p className="text-base text-neutral-dark text-center">
           Sign up and start your journey!
         </p>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        {success && (
+          <p className="text-green-600 text-center font-semibold">
+            Registration successful! Redirecting...
+          </p>
+        )}
+        {errorMsg && (
+          <p className="text-red-600 text-center font-semibold">{errorMsg}</p>
+        )}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+          autoComplete="off"
+        >
           <InputFloating
             label="Name"
             name="name"
@@ -67,8 +137,8 @@ export default function Register() {
             error={errors.password?.message}
           />
 
-          <Button type="submit" variant="primary" fullWidth disabled={loading}>
-            {loading ? "Registering..." : "Register"}
+          <Button type="submit" variant="primary" fullWidth aria-busy={false}>
+            Register
           </Button>
         </form>
 
