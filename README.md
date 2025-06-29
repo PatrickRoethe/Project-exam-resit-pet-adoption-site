@@ -50,4 +50,6 @@ npm run dev
 - Testing (WCAG, accessibility, performance)
 - Searchbar on mobile view goes outside of HeroBanner, Not proper handling of dead space on desktop (login, reg, create and edit)
 - Pet details: entire bg needs to use the same color from tailwind.config
+- Enhance contrast on herobanner by following design system -> fill black, with high opacity or secondary color? (FOR h1 & h2)
+- Make inputfloating, not come behind borders on active state -> and increase size for better redability.
 - and a lot more!
