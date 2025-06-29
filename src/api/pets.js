@@ -71,3 +71,15 @@ export async function getPet(id) {
   }
   return data;
 }
+// --- GET ALL BY OWNER ---
+export async function getMyPets(profileName) {
+  const response = await fetch(`${BASE_URL}?owner.name=${profileName}`, {
+    method: "GET",
+    headers: getAuthHeaders(),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Could not fetch your pets");
+  }
+  return data.data; // direkte til array med dine pets
+}

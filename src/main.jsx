@@ -4,10 +4,20 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 
-createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+// 👇 LEGG TIL import
+import { useInitAuth } from "./hooks/useInitAuth";
+
+function Root() {
+  useInitAuth(); // Sikrer at auth er satt før resten
+  return (
     <BrowserRouter>
       <App />
     </BrowserRouter>
+  );
+}
+
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Root />
   </React.StrictMode>
 );
