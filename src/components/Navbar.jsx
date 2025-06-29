@@ -1,21 +1,26 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/Logowithwhitetext.png";
+import { useAuthStore } from "../store/authStore"; // <-- IMPORT
 import MobileDrawer from "./MobileDrawer";
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Hent fra store!
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const isLoggedIn = !!user;
 
   const links = [
     { to: "/", label: "Home" },
     { to: "/login", label: "Login" },
     { to: "/register", label: "Register" },
-    { to: "/createpet", label: "CreatePet" },
-    { to: "/editpet", label: "EditPet" },
+    { to: "/create", label: "CreatePet" }, // OBS: "/create", ikke "/createpet"
+    { to: "/edit/1", label: "EditPet" }, // Eksempel, hvis du trenger spesifikk ID
   ];
-
-  const isLoggedIn = true; // TODO: koble til auth-state
 
   return (
     <nav className="bg-primary border-b border-border-default px-4 py-2 flex items-center justify-between relative">
@@ -56,7 +61,10 @@ export default function Navbar() {
               hover:bg-[#F2FAF3] hover:text-secondary hover:shadow-md transition-colors
               border border-primary
             "
-            onClick={() => alert("Log out!")}
+            onClick={() => {
+              logout();
+              navigate("/login");
+            }}
           >
             Logout
           </button>
@@ -70,7 +78,7 @@ export default function Navbar() {
         aria-label={drawerOpen ? "Close menu" : "Open menu"}
       >
         {drawerOpen ? (
-          /* X-ikon */
+          // X-ikon
           <svg
             width={32}
             height={32}
@@ -83,7 +91,7 @@ export default function Navbar() {
             <line x1="18" y1="6" x2="6" y2="18" strokeLinecap="round" />
           </svg>
         ) : (
-          /* Hamburger-ikon */
+          // Hamburger-ikon
           <svg
             width={32}
             height={32}
@@ -103,7 +111,11 @@ export default function Navbar() {
         onClose={() => setDrawerOpen(false)}
         links={links}
         isLoggedIn={isLoggedIn}
-        logout={() => alert("Log out!")}
+        logout={() => {
+          logout();
+          setDrawerOpen(false);
+          navigate("/login");
+        }}
       />
     </nav>
   );
