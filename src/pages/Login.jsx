@@ -22,7 +22,7 @@ export default function Login() {
     try {
       const result = await login(data);
       useAuthStore.getState().login(result.data, result.token);
-      navigate("/"); // dashboard om tid
+      window.location.href = "/"; //dashbord om tid//
     } catch (error) {
       setError("email", { type: "manual", message: "Invalid credentials" });
     } finally {
