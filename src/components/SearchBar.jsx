@@ -1,106 +1,97 @@
 import { useState } from "react";
 import Input from "./Input";
 
-/* forslag til statiske forslag – kan flyttes til utils */
-const speciesOptions = [
-  "Small dogs",
-  "Large dogs",
-  "Cats",
-  "Kittens",
-  "Puppies",
-];
-const locationOptions = [
-  "Oslo",
-  "Bergen",
-  "Trondheim",
-  "Stavanger",
-  "Tromsø",
-  "Kristiansand",
-];
-
 export default function SearchBar({
   valueSpecies = "",
   valueLocation = "",
   onChangeSpecies,
   onChangeLocation,
+  suggestionsSpecies = [],
+  suggestionsLocation = [],
 }) {
-  const [showSpecies, setShowSpecies] = useState(false);
-  const [showLocation, setShowLocation] = useState(false);
+  const [openSpecies, setOpenSpecies] = useState(false);
+  const [openLocation, setOpenLocation] = useState(false);
 
-  const filtSpecies = speciesOptions.filter((o) =>
-    o.toLowerCase().includes(valueSpecies.toLowerCase())
+  /* filtrer forslag mens brukeren skriver */
+  const specOpts = suggestionsSpecies.filter((s) =>
+    s.toLowerCase().includes(valueSpecies.toLowerCase())
   );
-  const filtLocation = locationOptions.filter((o) =>
-    o.toLowerCase().includes(valueLocation.toLowerCase())
+  const locOpts = suggestionsLocation.filter((l) =>
+    l.toLowerCase().includes(valueLocation.toLowerCase())
   );
+
+  /* felles klasser for input – tving mørk tekst/placeholder */
+  const inputCls =
+    "text-sm sm:text-base border-none rounded-none focus:ring-0 text-neutral-dark placeholder-neutral-dark";
 
   return (
-    /* YTRE “pille” */
     <div
       className="
-        w-full max-w-2xl mx-auto
-        flex
-        rounded-input bg-white
-        border border-border-default
-        focus-within:ring-2 focus-within:ring-secondary
-        overflow-hidden
-      "
+        w-full max-w-2xl mx-auto flex
+        rounded-input bg-white border border-border-default
+        focus-within:ring-2 focus-within:ring-secondary overflow-visible"
     >
-      {/* ------- Species ------- */}
+      {/* ---------- Species ---------- */}
       <div className="relative flex-1">
         <Input
-          className="border-none rounded-none focus:ring-0"
           placeholder="Search Species, Kitten etc"
+          className={inputCls}
           value={valueSpecies}
           onChange={onChangeSpecies}
-          onFocus={() => setShowSpecies(true)}
-          onBlur={() => setTimeout(() => setShowSpecies(false), 120)}
+          onFocus={() => setOpenSpecies(true)}
+          onBlur={() => setTimeout(() => setOpenSpecies(false), 100)}
         />
-
-        {showSpecies && filtSpecies.length > 0 && (
-          <ul className="absolute left-0 right-0 z-20 mt-1 rounded-input bg-white border border-border-default shadow-card">
-            {filtSpecies.map((o) => (
+        {openSpecies && specOpts.length > 0 && (
+          <ul
+            className="
+              absolute inset-x-0 z-30 mt-1 max-h-48 overflow-auto
+              rounded-input bg-white border border-border-default shadow-card"
+          >
+            {specOpts.map((opt) => (
               <li
-                key={o}
+                key={opt}
                 className="px-4 py-2 hover:bg-primary-light cursor-pointer text-neutral-dark"
                 onMouseDown={() => {
-                  onChangeSpecies({ target: { value: o } });
-                  setShowSpecies(false);
+                  onChangeSpecies({ target: { value: opt } });
+                  setOpenSpecies(false);
                 }}
               >
-                {o}
+                {opt}
               </li>
             ))}
           </ul>
         )}
       </div>
 
-      {/* vertikal skille – vises alltid */}
+      {/* vertikal skille */}
       <div className="w-px bg-border-default self-stretch" />
 
-      {/* ------- Location ------- */}
+      {/* ---------- Location ---------- */}
       <div className="relative flex-1">
         <Input
-          className="border-none rounded-none focus:ring-0"
-          placeholder="Location "
+          placeholder="Location"
+          className={inputCls}
           value={valueLocation}
           onChange={onChangeLocation}
-          onFocus={() => setShowLocation(true)}
-          onBlur={() => setTimeout(() => setShowLocation(false), 120)}
+          onFocus={() => setOpenLocation(true)}
+          onBlur={() => setTimeout(() => setOpenLocation(false), 100)}
         />
-
-        {showLocation && filtLocation.length > 0 && (
-          <ul className="absolute left-0 right-0 z-20 mt-1 rounded-input bg-white border border-border-default shadow-card">
-            {filtLocation.map((o) => (
+        {openLocation && locOpts.length > 0 && (
+          <ul
+            className="
+              absolute inset-x-0 z-30 mt-1 max-h-48 overflow-auto
+              rounded-input bg-white border border-border-default shadow-card"
+          >
+            {locOpts.map((opt) => (
               <li
-                key={o}
+                key={opt}
                 className="px-4 py-2 hover:bg-primary-light cursor-pointer text-neutral-dark"
                 onMouseDown={() => {
-                  onChangeLocation({ target: { value: o } });
-                  setShowLocation(false);
+                  onChangeLocation({ target: { value: opt } });
+                  setOpenLocation(false);
                 }}
               >
-                {o}
+                {opt}
               </li>
             ))}
           </ul>
