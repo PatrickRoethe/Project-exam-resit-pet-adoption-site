@@ -1,4 +1,6 @@
 # PetAdopt – Project Exam Resit (Noroff FED2)
+![image](https://github.com/user-attachments/assets/da1271f8-3380-4d86-96de-c8ff57b493c9)
+
 
 **PetAdopt** is a simple CRUD pet adoption frontend, built as a project exam resit for Noroff FED2 (Frontend Development).  
 The app allows users to create, view, update, and delete pet adoption listings.  
