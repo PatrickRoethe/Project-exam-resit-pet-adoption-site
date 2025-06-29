@@ -20,9 +20,9 @@ export default function SearchBar({
     l.toLowerCase().includes(valueLocation.toLowerCase())
   );
 
-  /* felles klasser for input – tving mørk tekst/placeholder */
+  /* felles klasser for input – tving mørk tekst/placeholder og riktig bg */
   const inputCls =
-    "text-sm sm:text-base border-none rounded-none focus:ring-0 text-neutral-dark placeholder-neutral-dark";
+    "bg-neutral-light text-sm sm:text-base border-none rounded-none focus:ring-0 text-neutral-dark placeholder-neutral-dark";
 
   return (
     <div
@@ -45,7 +45,7 @@ export default function SearchBar({
           <ul
             className="
               absolute inset-x-0 z-30 mt-1 max-h-48 overflow-auto
-              rounded-input bg-white border border-border-default shadow-card"
+              rounded-input bg-neutral-light border border-border-default shadow-card"
           >
             {specOpts.map((opt) => (
               <li
@@ -80,7 +80,7 @@ export default function SearchBar({
           <ul
             className="
               absolute inset-x-0 z-30 mt-1 max-h-48 overflow-auto
-              rounded-input bg-white border border-border-default shadow-card"
+              rounded-input bg-neutral-light border border-border-default shadow-card"
           >
             {locOpts.map((opt) => (
               <li
