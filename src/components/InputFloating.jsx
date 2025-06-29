@@ -8,7 +8,6 @@ export default function InputFloating({
   disabled = false,
   ...props
 }) {
-  // Du kan droppe isFocused/shouldFloat hvis du aldri skal flytte labelen
   return (
     <div className="relative w-full">
       <input
@@ -20,10 +19,9 @@ export default function InputFloating({
         disabled={disabled}
         autoComplete={type === "password" ? "current-password" : "on"}
         className={`
-          w-full rounded-input bg-[#f1f8e9] px-4 pt-7 pb-2 text-base md:text-lg border border-border-default
-          transition-colors focus:outline-none ${
-            error ? "border-error" : "focus:border-secondary"
-          }
+          w-full rounded-input bg-neutral-light px-4 pt-7 pb-2 text-base md:text-lg border border-border-default
+          transition-colors focus:outline-none
+          ${error ? "border-error" : "focus:border-secondary"}
           ${
             disabled
               ? "bg-neutral-light text-placeholder cursor-not-allowed border-neutral-light"
