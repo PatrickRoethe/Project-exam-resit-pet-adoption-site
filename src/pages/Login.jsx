@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
+import { createApiKey } from "../auth/create-api-key"; // <-- VIKTIG!
 import Button from "../components/Button";
-import InputFloating from "../components/InputFloating"; // <-- Bruk denne!
+import InputFloating from "../components/InputFloating";
 import { useAuthStore } from "../store/authStore";
 
 export default function Login() {
@@ -20,9 +21,29 @@ export default function Login() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
+      // 1. Logg inn og hent token
       const result = await login(data);
-      useAuthStore.getState().login(result.data, result.token);
-      window.location.href = "/"; //dashbord om tid//
+
+      // 2. Bygg bruker-objekt
+      const userData = {
+        name: result.data.name,
+        email: result.data.email,
+      };
+      const token = result.data.accessToken;
+
+      // 3. Prøv å hente apiKey fra sessionStorage først
+      let apiKey = sessionStorage.getItem("apiKey");
+
+      // 4. Hvis den IKKE finnes, opprett én med token
+      if (!apiKey) {
+        apiKey = await createApiKey(token); // <--- Sjekk at denne returnerer kun key-strengen!
+        sessionStorage.setItem("apiKey", apiKey); // (ekstra safety)
+      }
+
+      // 5. Login i zustand + sessionStorage
+      useAuthStore.getState().login(userData, token, apiKey);
+
+      navigate("/"); // **Unngå full reload**
     } catch (error) {
       setError("email", { type: "manual", message: "Invalid credentials" });
     } finally {

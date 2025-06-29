@@ -1,45 +1,51 @@
+// src/api/auth.js
+
 export async function login({ email, password }) {
-  try {
-    const response = await fetch("https://v2.api.noroff.dev/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+  const response = await fetch("https://v2.api.noroff.dev/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (!response.ok) {
-      console.error(" Login failed:", data);
-      throw new Error(data.message || "Login failed");
-    }
-
-    console.log(" Login success:", data);
-    return data;
-  } catch (error) {
-    console.error(" Login error:", error);
-    throw error;
+  if (!response.ok) {
+    throw new Error(data.message || "Login failed");
   }
+
+  return data;
 }
 
 export async function register({ name, email, password }) {
-  try {
-    const response = await fetch("https://v2.api.noroff.dev/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
+  const response = await fetch("https://v2.api.noroff.dev/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password }),
+  });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (!response.ok) {
-      console.error(" Registration failed:", data);
-      throw new Error(data.message || "Registration failed");
-    }
-
-    console.log(" Registration success:", data);
-    return data;
-  } catch (error) {
-    console.error(" Registration error:", error);
-    throw error;
+  if (!response.ok) {
+    throw new Error(data.message || "Registration failed");
   }
+
+  return data;
+}
+
+// EN GANG etter login, hvis apiKey ikke finnes!
+export async function createApiKey(token) {
+  const response = await fetch(
+    "https://v2.api.noroff.dev/auth/create-api-key",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name: "My App Key" }),
+    }
+  );
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || "Could not create API key");
+  return data.data.key;
 }
