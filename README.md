@@ -1,12 +1,41 @@
-# React + Vite
+# PetAdopt – Project Exam Resit (Noroff FED2)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**PetAdopt** is a simple CRUD pet adoption frontend, built as a project exam resit for Noroff FED2 (Frontend Development).  
+The app allows users to create, view, update, and delete pet adoption listings.  
+Design and functionality is based on provided Figma wireframes and the Noroff API.
 
-Currently, two official plugins are available:
+- **Live demo:** [https://incandescent-creponne-8e1230.netlify.app/](https://incandescent-creponne-8e1230.netlify.app/)
+- **Figma:** [View design](https://www.figma.com/design/JkOLy7xOvAPunfR4vjGFiL/Pet-adoption-site?node-id=13-30&t=zgud4fJ7baGHIR6i-1)
+- **GitHub repo:** [https://github.com/PatrickRoethe/Project-exam-resit-pet-adoption-site](https://github.com/PatrickRoethe/Project-exam-resit-pet-adoption-site)
+- **Roadmap/board:** [GitHub Project](https://github.com/users/PatrickRoethe/projects/9)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech stack
 
-## Expanding the ESLint configuration
+- React 19
+- React Router 7
+- React Hook Form 7
+- Zustand
+- TailwindCSS
+- Vite
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## How to run locally
+
+```bash
+git clone https://github.com/PatrickRoethe/Project-exam-resit-pet-adoption-site.git
+cd project-exam-resit-pet-adoption-site
+npm install
+npm run dev
+
+```
+
+## Known issues & TODOs
+Some success/error messages need improvement
+Desktop layout could be more tailored to design spec
+Some features (like dashboard) are not fully implemented
+Code cleanup, refactoring, and error handling could be improved
+Optimization: All use global styling, no duplicat code etc
+Build out adopt function, or contact form
+Build confirmations modals, in  design theme
+Adjust and work on LOGO size
+Favourites
+Profile/Dashboard page, with easy navigation to pet listings AND to update info, avatar etc.
