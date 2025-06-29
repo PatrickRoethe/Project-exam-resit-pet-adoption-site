@@ -1,5 +1,3 @@
-// src/api/auth.js
-
 export async function login({ email, password }) {
   const response = await fetch("https://v2.api.noroff.dev/auth/login", {
     method: "POST",

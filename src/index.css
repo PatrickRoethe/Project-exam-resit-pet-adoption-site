@@ -5,7 +5,7 @@
 /* Global app base styles */
 body {
   @apply font-sans bg-primary-light text-neutral-dark;
-  font-size: 16px; /* Baseline fra designsystemet, kan hende at vi må gjøre endringer for mobil? */
+  font-size: 16px; /* Baseline fra designsystemet, kan hende at jeg må gjøre endringer for mobil?*/
   min-height: 100dvh;
 }
 

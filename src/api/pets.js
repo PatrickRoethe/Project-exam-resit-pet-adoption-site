@@ -23,7 +23,6 @@ export async function createPet(petData) {
 
   const data = await response.json();
   if (!response.ok) {
-    // Kaster hele responsen, ikke bare én message
     throw data;
   }
   return data;
@@ -55,7 +54,7 @@ export async function deletePet(id) {
     const data = await response.json();
     throw new Error(data.message || "Could not delete pet");
   }
-  // DELETE gir ofte 204 No Content, så vi returnerer ingenting
+
   return true;
 }
 
@@ -81,5 +80,5 @@ export async function getMyPets(profileName) {
   if (!response.ok) {
     throw new Error(data.message || "Could not fetch your pets");
   }
-  return data.data; // direkte til array med dine pets
+  return data.data;
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
-import { createApiKey } from "../auth/create-api-key"; // <-- VIKTIG!
+import { createApiKey } from "../auth/create-api-key";
 import Button from "../components/Button";
 import InputFloating from "../components/InputFloating";
 import { useAuthStore } from "../store/authStore";
