@@ -52,4 +52,5 @@ npm run dev
 - Pet details: entire bg needs to use the same color from tailwind.config
 - Enhance contrast on herobanner by following design system -> fill black, with high opacity or secondary color? (FOR h1 & h2)
 - Make inputfloating, not come behind borders on active state -> and increase size for better redability.
+- Improve searchbar, and auto suggestions
 - and a lot more!
