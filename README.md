@@ -39,4 +39,5 @@ npm run dev
 - Adjust and work on LOGO size
 - Favourites
 - Profile/Dashboard page, with easy navigation to pet listings AND to update info, avatar etc.
+
 and more!
