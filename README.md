@@ -53,4 +53,7 @@ npm run dev
 - Enhance contrast on herobanner by following design system -> fill black, with high opacity or secondary color? (FOR h1 & h2)
 - Make inputfloating, not come behind borders on active state -> and increase size for better redability.
 - Improve searchbar, and auto suggestions
-- and a lot more!
+- Make mobiledrawer text also change color on hover, to secondary not just underline
+
+
+..and a lot more! 
