@@ -8,9 +8,34 @@ import SearchBar from "../components/SearchBar";
 /* ───────── helper for posts-per-page ───────── */
 function calcPetsPerPage() {
   const w = window.innerWidth;
-  if (w >= 1280) return 20; // desktop  5×4
-  if (w >= 640) return 12; // tablet   3×4
-  return 8; // mobil    2×4
+  if (w >= 1280) return 20; // desktop  5 × 4
+  if (w >= 640) return 12; // tablet   3 × 4
+  return 8; // mobil    2 × 4
+}
+
+/* ───────── helper for “meta-kategori” match ───────── */
+function matchesSpecial(term, pet) {
+  const t = term.toLowerCase();
+  const s = (pet.species || "").toLowerCase();
+  const size = (pet.size || "").toLowerCase();
+  const isPuppyKitten = pet.age !== undefined && pet.age <= 1;
+
+  switch (t) {
+    case "small dogs":
+      return s === "dog" && size === "small";
+    case "large dogs":
+      return s === "dog" && size === "large";
+    case "puppies":
+      return s === "dog" && isPuppyKitten;
+    case "small cats":
+      return s === "cat" && size === "small";
+    case "large cats":
+      return s === "cat" && size === "large";
+    case "kittens":
+      return s === "cat" && isPuppyKitten;
+    default:
+      return false;
+  }
 }
 
 export default function Home() {
@@ -48,11 +73,8 @@ export default function Home() {
           const json = await res.json();
           all = [...all, ...(json?.data ?? [])];
           last = json?.meta?.isLastPage;
-          page++;
+          page += 1;
         }
-        console.log("Alle species fra API:", [
-          ...new Set(all.map((p) => p.species)),
-        ]);
         setPets(all);
       } catch (err) {
         console.error("Kunne ikke hente pets:", err);
@@ -65,18 +87,31 @@ export default function Home() {
 
   /* ---------- filtrering ---------- */
   const filteredPets = pets.filter((pet) => {
-    const s = (pet.species || "").toLowerCase(); // normalisert species
+    const s = (pet.species || "").toLowerCase();
 
     // badge-filter
     if (badge === "dog" && s !== "dog") return false;
     if (badge === "cat" && s !== "cat") return false;
     if (badge === "other" && (s === "dog" || s === "cat")) return false;
 
-    // fritekst species/name/breed
-    if (speciesText.trim()) {
-      const q = speciesText.toLowerCase();
+    const query = speciesText.trim().toLowerCase();
+
+    // meta-kategori (“Large dogs” osv.)
+    const specialTerms = [
+      "small dogs",
+      "large dogs",
+      "puppies",
+      "small cats",
+      "large cats",
+      "kittens",
+    ];
+    if (specialTerms.includes(query)) {
+      if (!matchesSpecial(query, pet)) return false;
+    }
+    // vanlig fritekst-søk
+    else if (query) {
       const hay = (pet.name + pet.species + pet.breed).toLowerCase();
-      if (!hay.includes(q)) return false;
+      if (!hay.includes(query)) return false;
     }
 
     // lokasjon
@@ -89,7 +124,6 @@ export default function Home() {
 
   /* ---------- paginering ---------- */
   const totalPages = Math.max(1, Math.ceil(filteredPets.length / petsPerPage));
-
   useEffect(() => {
     if (currentPage > totalPages) setCurrentPage(1);
   }, [totalPages, currentPage]);
@@ -99,6 +133,22 @@ export default function Home() {
 
   /* hopp til side 1 når filter endres */
   useEffect(() => setCurrentPage(1), [speciesText, locationText, badge]);
+
+  /* ---------- forslag-lister til søkefelt ---------- */
+  const baseSpecies = pets.map((p) => p.species?.trim()).filter(Boolean);
+  const specials = [
+    "Small dogs",
+    "Large dogs",
+    "Puppies",
+    "Small cats",
+    "Large cats",
+    "Kittens",
+  ];
+  const suggestionsSpecies = [...new Set([...baseSpecies, ...specials])].sort();
+
+  const suggestionsLocation = [
+    ...new Set(pets.map((p) => p.location?.trim()).filter(Boolean)),
+  ].sort();
 
   /* ---------- UI ---------- */
   return (
@@ -119,6 +169,8 @@ export default function Home() {
           valueLocation={locationText}
           onChangeSpecies={(e) => setSpeciesText(e.target.value)}
           onChangeLocation={(e) => setLocationText(e.target.value)}
+          suggestionsSpecies={suggestionsSpecies}
+          suggestionsLocation={suggestionsLocation}
         />
 
         <h1 className="mt-8 text-2xl font-bold md:text-[28px] text-primary">
