@@ -29,13 +29,14 @@ npm run dev
 ```
 
 ## Known issues & TODOs
-Some success/error messages need improvement
-Desktop layout could be more tailored to design spec
-Some features (like dashboard) are not fully implemented
-Code cleanup, refactoring, and error handling could be improved
-Optimization: All use global styling, no duplicat code etc
-Build out adopt function, or contact form
-Build confirmations modals, in  design theme
-Adjust and work on LOGO size
-Favourites
-Profile/Dashboard page, with easy navigation to pet listings AND to update info, avatar etc.
+- Some success/error messages need improvement
+- Desktop layout could be more tailored to design spec
+- Some features (like dashboard) are not fully implemented
+- Code cleanup, refactoring, and error handling could be improved
+- Optimization: All use global styling, no duplicat code etc
+- Build out adopt function, or contact form
+- Build confirmations modals, in  design theme
+- Adjust and work on LOGO size
+- Favourites
+- Profile/Dashboard page, with easy navigation to pet listings AND to update info, avatar etc.
+and more!
