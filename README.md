@@ -44,4 +44,5 @@ npm run dev
 - Popular locations?
 - Fullwidth btns on mobile
 - Accesibility, aria labels and more
+- PROPER typography 1:1 with styleguide in a optimized way - responsive 
 and alot more!
