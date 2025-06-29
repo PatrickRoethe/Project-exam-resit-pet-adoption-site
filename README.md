@@ -43,4 +43,5 @@ npm run dev
 - Improve filtering, and add more options?
 - Popular locations?
 - Fullwidth btns on mobile
+- Accesibility, aria labels and more
 and alot more!
