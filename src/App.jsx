@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./layout/Layout.jsx";
 
 /* pages */
+import ProtectedRoute from "./components/ProtectedRoute"; // <-- IMPORT
 import CreatePet from "./pages/CreatePet";
 import EditPet from "./pages/EditPet";
 import Home from "./pages/Home";
@@ -18,9 +19,25 @@ function App() {
         <Route path="pet/:id" element={<PetDetail />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="create" element={<CreatePet />} />
-        <Route path="edit/:id" element={<EditPet />} />
-      </Route>{" "}
+
+        {/* Protected routes */}
+        <Route
+          path="create"
+          element={
+            <ProtectedRoute>
+              <CreatePet />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditPet />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
     </Routes>
   );
 }

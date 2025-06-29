@@ -22,7 +22,7 @@ export default function Register() {
     try {
       const result = await registerUser(data);
       useAuthStore.getState().login(result.data, result.token);
-      navigate("/"); // Endre til ønsket redirect!
+      window.location.href = "/"; // Dashboard om tid
     } catch (error) {
       setError("email", { type: "manual", message: "Registration failed" });
     } finally {
