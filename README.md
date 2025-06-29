@@ -45,4 +45,5 @@ npm run dev
 - Fullwidth btns on mobile
 - Accesibility, aria labels and more
 - PROPER typography 1:1 with styleguide in a optimized way - responsive 
+- Testing
 and alot more!
