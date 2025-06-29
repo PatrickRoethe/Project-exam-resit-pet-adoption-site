@@ -8,7 +8,7 @@ export default function PetCard({ pet }) {
 
   return (
     <Link
-      to={`/pets/${id}`}
+      to={`/pet/${id}`}
       className="
         block overflow-hidden rounded-xl border border-[#AAAAAA] bg-white
         transition duration-300
