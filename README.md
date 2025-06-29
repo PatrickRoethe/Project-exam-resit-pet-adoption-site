@@ -35,17 +35,19 @@ npm run dev
 - Desktop layout could be more tailored to design spec
 - Some features (like dashboard) are not fully implemented
 - Code cleanup, refactoring, and error handling could be improved
-- Optimization: All use global styling, no duplicat code etc
+- Optimization: All use global styling, no duplicate code etc
 - Build out adopt function, or contact form
-- Build confirmations modals, in  design theme
+- Build confirmations modals, in design theme
 - Adjust and work on LOGO size
 - Favourites - probably just local though?
 - Profile/Dashboard page, with easy navigation to pet listings AND to update info, avatar etc.
--Clean up Searchbar to 1:1 designsystem
+- Clean up Searchbar to 1:1 design system
 - Improve filtering, and add more options?
 - Popular locations?
 - Fullwidth btns on mobile
-- Accesibility, aria labels and more
-- PROPER typography 1:1 with styleguide in a optimized way - responsive 
-- Testing
-and alot more!
+- Accessibility, aria labels and more
+- PROPER typography 1:1 with styleguide in a optimized way - responsive
+- Testing (WCAG, accessibility, performance)
+- Searchbar on mobile view goes outside of HeroBanner, Not proper handling of dead space on desktop (login, reg, create and edit)
+- Pet details: entire bg needs to use the same color from tailwind.config
+- and a lot more!
