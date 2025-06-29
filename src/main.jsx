@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 
-// 👇 LEGG TIL import
 import { useInitAuth } from "./hooks/useInitAuth";
 
 function Root() {

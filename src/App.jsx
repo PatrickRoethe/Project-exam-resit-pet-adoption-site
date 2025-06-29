@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import PetDetail from "./pages/PetDetail";
 import Register from "./pages/Register";
 
-// 🔥 LEGG TIL:
 import { useInitAuth } from "./hooks/useInitAuth"; // <-- legg til denne importen
 
 /* app component */
