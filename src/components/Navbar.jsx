@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from "../assets/Logowithwhitetext.png";
+import logo from "../assets/logowithwhitetext.png";
 import { useAuthStore } from "../store/authStore";
 import MobileDrawer from "./MobileDrawer";
 

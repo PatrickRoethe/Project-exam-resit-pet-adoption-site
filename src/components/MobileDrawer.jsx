@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/Logowithwhitetext.png";
+import logo from "../assets/logowithwhitetext.png";
 
 export default function MobileDrawer({
   open,
