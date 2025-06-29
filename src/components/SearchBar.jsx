@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Input from "./Input";
 
+/* forslag til statiske forslag – kan flyttes til utils */
 const speciesOptions = [
-  "Small Dogs",
-  "Large Dogs",
+  "Small dogs",
+  "Large dogs",
   "Cats",
   "Kittens",
   "Puppies",
@@ -22,77 +23,84 @@ export default function SearchBar({
   valueLocation = "",
   onChangeSpecies,
   onChangeLocation,
-  // Optional: onSearchSubmit, osv.
 }) {
-  const [showSpeciesDropdown, setShowSpeciesDropdown] = useState(false);
-  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [showSpecies, setShowSpecies] = useState(false);
+  const [showLocation, setShowLocation] = useState(false);
 
-  // Filtered suggestions (case-insensitive)
-  const filteredSpecies = speciesOptions.filter((opt) =>
-    opt.toLowerCase().includes(valueSpecies.toLowerCase())
+  const filtSpecies = speciesOptions.filter((o) =>
+    o.toLowerCase().includes(valueSpecies.toLowerCase())
   );
-  const filteredLocations = locationOptions.filter((opt) =>
-    opt.toLowerCase().includes(valueLocation.toLowerCase())
+  const filtLocation = locationOptions.filter((o) =>
+    o.toLowerCase().includes(valueLocation.toLowerCase())
   );
 
   return (
-    <div className="flex flex-col w-full max-w-2xl mx-auto gap-3 md:flex-row md:gap-4">
-      {/* SPECIES FIELD */}
+    /* YTRE “pille” */
+    <div
+      className="
+        w-full max-w-2xl mx-auto
+        flex
+        rounded-input bg-white
+        border border-border-default
+        focus-within:ring-2 focus-within:ring-secondary
+        overflow-hidden
+      "
+    >
+      {/* ------- Species ------- */}
       <div className="relative flex-1">
         <Input
-          name="species"
-          placeholder="Search Species, Kitten, etc"
+          className="border-none rounded-none focus:ring-0"
+          placeholder="Search Species, Kitten etc"
           value={valueSpecies}
           onChange={onChangeSpecies}
-          onFocus={() => setShowSpeciesDropdown(true)}
-          onBlur={() => setTimeout(() => setShowSpeciesDropdown(false), 120)}
-          autoComplete="off"
+          onFocus={() => setShowSpecies(true)}
+          onBlur={() => setTimeout(() => setShowSpecies(false), 120)}
         />
-        {/* Dropdown */}
-        {showSpeciesDropdown && filteredSpecies.length > 0 && (
+
+        {showSpecies && filtSpecies.length > 0 && (
           <ul className="absolute left-0 right-0 z-20 mt-1 rounded-input bg-white border border-border-default shadow-card">
-            {filteredSpecies.map((option) => (
+            {filtSpecies.map((o) => (
               <li
-                key={option}
-                className="px-4 py-2 text-base text-neutral-dark hover:bg-primary-light cursor-pointer transition"
+                key={o}
+                className="px-4 py-2 hover:bg-primary-light cursor-pointer text-neutral-dark"
                 onMouseDown={() => {
-                  onChangeSpecies({ target: { value: option } });
-                  setShowSpeciesDropdown(false);
+                  onChangeSpecies({ target: { value: o } });
+                  setShowSpecies(false);
                 }}
               >
-                {option}
+                {o}
               </li>
             ))}
           </ul>
         )}
       </div>
-      {/* VERTICAL DIVIDER på desktop */}
-      <div className="hidden md:flex items-center px-2">
-        <div className="w-px h-8 bg-border-default" />
-      </div>
-      {/* LOCATION FIELD */}
+
+      {/* vertikal skille – vises alltid */}
+      <div className="w-px bg-border-default self-stretch" />
+
+      {/* ------- Location ------- */}
       <div className="relative flex-1">
         <Input
-          name="location"
-          placeholder="Location etc"
+          className="border-none rounded-none focus:ring-0"
+          placeholder="Location "
           value={valueLocation}
           onChange={onChangeLocation}
-          onFocus={() => setShowLocationDropdown(true)}
-          onBlur={() => setTimeout(() => setShowLocationDropdown(false), 120)}
-          autoComplete="off"
+          onFocus={() => setShowLocation(true)}
+          onBlur={() => setTimeout(() => setShowLocation(false), 120)}
         />
-        {showLocationDropdown && filteredLocations.length > 0 && (
+
+        {showLocation && filtLocation.length > 0 && (
           <ul className="absolute left-0 right-0 z-20 mt-1 rounded-input bg-white border border-border-default shadow-card">
-            {filteredLocations.map((option) => (
+            {filtLocation.map((o) => (
               <li
-                key={option}
-                className="px-4 py-2 text-base text-neutral-dark hover:bg-primary-light cursor-pointer transition"
+                key={o}
+                className="px-4 py-2 hover:bg-primary-light cursor-pointer text-neutral-dark"
                 onMouseDown={() => {
-                  onChangeLocation({ target: { value: option } });
-                  setShowLocationDropdown(false);
+                  onChangeLocation({ target: { value: o } });
+                  setShowLocation(false);
                 }}
               >
-                {option}
+                {o}
               </li>
             ))}
           </ul>
