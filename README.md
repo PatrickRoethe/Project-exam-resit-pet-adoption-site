@@ -37,7 +37,10 @@ npm run dev
 - Build out adopt function, or contact form
 - Build confirmations modals, in  design theme
 - Adjust and work on LOGO size
-- Favourites
+- Favourites - probably just local though?
 - Profile/Dashboard page, with easy navigation to pet listings AND to update info, avatar etc.
-
-and more!
+-Clean up Searchbar to 1:1 designsystem
+- Improve filtering, and add more options?
+- Popular locations?
+- Fullwidth btns on mobile
+and alot more!
