@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/Logowithwhitetext.png";
-import { useAuthStore } from "../store/authStore"; // <-- IMPORT
+import { useAuthStore } from "../store/authStore";
 import MobileDrawer from "./MobileDrawer";
 
 export default function Navbar() {
@@ -9,7 +9,6 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Hent fra store!
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const isLoggedIn = !!user;
@@ -18,8 +17,12 @@ export default function Navbar() {
     { to: "/", label: "Home" },
     { to: "/login", label: "Login" },
     { to: "/register", label: "Register" },
-    { to: "/create", label: "CreatePet" }, // OBS: "/create", ikke "/createpet"
-    { to: "/edit/1", label: "EditPet" }, // Eksempel, hvis du trenger spesifikk ID
+    ...(isLoggedIn
+      ? [
+          { to: "/create", label: "CreatePet" },
+          { to: "/edit/1", label: "EditPet" },
+        ]
+      : []),
   ];
 
   return (
